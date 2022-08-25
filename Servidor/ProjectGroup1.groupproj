@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{20132AC6-570A-4D63-8AC0-E90726E6BA20}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Servidor.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Client_Testa_Conexao\TesteConexao.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Servidor">
+        <MSBuild Projects="Servidor.dproj"/>
+    </Target>
+    <Target Name="Servidor:Clean">
+        <MSBuild Projects="Servidor.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Servidor:Make">
+        <MSBuild Projects="Servidor.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TesteConexao">
+        <MSBuild Projects="Client_Testa_Conexao\TesteConexao.dproj"/>
+    </Target>
+    <Target Name="TesteConexao:Clean">
+        <MSBuild Projects="Client_Testa_Conexao\TesteConexao.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TesteConexao:Make">
+        <MSBuild Projects="Client_Testa_Conexao\TesteConexao.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Servidor;TesteConexao"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Servidor:Clean;TesteConexao:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Servidor:Make;TesteConexao:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

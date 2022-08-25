@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="UTF-8" />
+<!-- Resources -->
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script> 
+    <script src="https://www.amcharts.com/lib/4/themes/material.js"></script> 
+
+    <link  href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <!------ Include the above in your HEAD tag ---------->
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+  </head>
+
+<!-- HTML -->
+<center><h1> Dashboard Financeiro </h1></center>
+
+
+<!-- Parte dos Cards -->
+<div class="countener">
+      <div class="row">
+         <div class="col-md-3"> 
+              <div class="card text-white bg-primary mb-3" style="max-width: 28rem ; max-height: 10rem">
+                <div class="card-header">Contas Registradas</div>
+                <div class="card-body">
+                  <h5 class="card-title" id="totaldebito2"><i class="fa fa-home fa-fw fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;200</h5>
+                  <p class="card-text" id="totaldebito3">total de Contas Registradas</p>                 
+                 </div>
+              </div>
+         </div>     
+         <div class="col-md-3"> 
+              <div class="card text-white  bg-info mb-3" style="max-width: 28rem; max-height: 10rem">
+                <div class="card-header">No.Transacoes</div>
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fa fa-cogs fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;235</h5>
+                  <p class="card-text">total de Transacoes do Periodo</p>
+                </div>
+              </div>
+         </div>
+         <div class="col-md-3">      
+              <div class="card text-white bg-success mb-3" style="max-width: 28rem; max-height: 10rem">
+                <div class="card-header">Total de Credito</div>
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fa fa-line-chart fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;R$ 0,00</h5>
+                  <p class="card-text">procure focar nos Ativos</p>
+                </div>
+              </div>
+         </div>
+         <div class="col-md-3">              
+              <div class="card text-white bg-danger mb-3" style="max-width: 28rem; max-height: 10rem">
+                <div class="card-header">Total de Debito</div>
+                <div class="card-body">
+                  <h5 class="card-title"><i class="fa fa-money fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;R$ 0,00</h5>
+                  <p class="card-text">acompanhe sempre suas despesas </p>
+                </div>
+              </div>
+          </div>  
+
+ 
+</div>
+
+<!-- Parte da Exibição dos Gráficos -->
+
+<center>
+  <div id="chartdivGraficoPizza"           class="chartdivGraficoPizza">             </div>
+  <div id="chartdivGraficoBarra"           class="chartdivGraficoBarra">            </div>
+
+</center>
+
+<!-- Grafico de Barras -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdivGraficoBarra", am4charts.XYChart);
+
+// Add data
+chart.data = DADOS_BARRA ;
+
+// Create axes
+
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "MES_ANO";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 30;
+
+categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
+  if (target.dataItem && target.dataItem.index & 2 == 2) {
+    return dy + 25;
+  }
+  return dy;
+});
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueY            = "DEBITO";
+series.dataFields.categoryX         = "MES_ANO";
+series.name                         = "DEBITO";
+series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+series.columns.template.fillOpacity = .8;
+
+var columnTemplate = series.columns.template;
+columnTemplate.strokeWidth   = 2;
+columnTemplate.strokeOpacity = 1;
+
+}); // end am4core.ready()
+</script>
+
+
+
+
+<!-- Grafico de PIZZA -->
+
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+;
+
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdivGraficoPizza", am4charts.PieChart);
+
+// Add data
+chart.data = DADOS_PIZZA ;
+
+// Set inner radius
+chart.innerRadius = am4core.percent(50);
+
+// Add and configure Series
+var pieSeries = chart.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value              = "TOTAL";
+pieSeries.dataFields.category           = "NOME_GRUPO";
+pieSeries.slices.template.titles.text   = "teste";
+pieSeries.slices.template.stroke        = am4core.color("#007bff");
+pieSeries.slices.template.strokeWidth   = 2;
+pieSeries.slices.template.strokeOpacity = 1;
+
+
+// This creates initial animation
+pieSeries.hiddenState.properties.opacity = 1;
+pieSeries.hiddenState.properties.endAngle = -90;
+pieSeries.hiddenState.properties.startAngle = -90;
+
+
+}); // end am4core.ready()
+</script>
+
+
+
+
+
+ 
+<style>
+.container {
+  width: 380px;
+  height: 320px;
+  margin: 0 auto;
+}
+
+
+  .chartdivGraficoBarra {
+  width:  600px;
+  height: 350px;
+  float: left;
+  border: 0.5px solid #535353;
+  margin: 10px;
+  margin-top: 20px;
+  position: relative;
+}
+  .chartdivGraficoPizza {
+  width:  600px;
+  height: 350px;
+  float: left;
+  border: 0.5px solid #535353;
+  margin: 10px;
+  margin-top: 20px;
+  position: relative;
+}
+
+
+</style>
+
+
+
+<!-- Parte dos Cards -->
+
+<style >
+.card {
+  width: 380px;
+  height: 320px;
+  margin: 0 auto;
+}
+  .card-counter{
+/*    box-shadow: 2px 2px 10px #DADADA;*/
+    margin: 5px;
+    padding: 10px 10px;
+    background-color: #fff;
+    height: 100px;
+    border-radius: 5px;
+    transition: .3s linear all;
+  }
+
+  .card-counter:hover{
+/*    box-shadow: 4px 4px 20px #DADADA;*/
+    transition: .3s linear all;
+  }
+
+  .card-counter.primary{
+    background-color: #007bff;
+    color: #FFF;
+  }
+
+  .card-counter.danger{
+    background-color: #ef5350;
+    color: #FFF;
+  }  
+
+  .card-counter.success{
+    background-color: #66bb6a;
+    color: #FFF;
+  }  
+
+  .card-counter.warning{
+    background-color: #FFA500;
+    color: #FFF;
+  }  
+
+  .card-counter.info{
+    background-color: #26c6da;
+    color: #FFF;
+  }  
+
+  .card-counter i{
+    font-size: 5em;
+    opacity: 0.2;
+  }
+
+  .card-counter .count-numbers{
+    position: absolute;
+    right: 35px;
+    top: 20px;
+    font-size: 32px;
+    display: block;
+  }
+
+  .card-counter .count-name{
+    position: absolute;
+    right: 25px;
+    top: 65px;
+    font-style: italic;
+    text-transform: capitalize;
+    opacity: 0.5;
+    display: block;
+    font-size: 18px;
+  }
+
+}
+
+</style>
+
+<style>
+ 
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+</style>
+
+
+</html>

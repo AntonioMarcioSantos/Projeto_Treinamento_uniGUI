@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>amCharts V4 Example - simple-pie-chart</title>
+<!-- Resources -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script> 
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link   rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+
+
+<div id="teste" role="banner">
+
+
+</div>
+
+  </head>
+<!-- HTML -->
+<div id="chartdiv"></div>
+
+
+
+<!-- Styles -->
+<style>
+
+
+
+body { background-color: #fff; color: #000; }
+#chartdiv {
+  width: 100%;
+  height: 700px;
+}												
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+
+<!-- Chart code -->
+<script>
+var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "pie",
+  "theme": "No theme",
+  "titles": [ {
+    "text": "Despesas por Conta Plano",
+    "size": 16 
+  } ],
+
+  "decimalSeparator": ",",
+  "thousandsSeparator": ".",
+  "dataProvider": [{"CONTA_PLANO":"RECEBIMENTOS\u0020DE\u0020VENDAS\u0020A\u0020VISTA","TOTAL":"3123"},{"CONTA_PLANO":"RECEBIMENTOS\u0020DE\u0020VENDAS\u0020A\u0020PRAZO","TOTAL":"1500"},{"CONTA_PLANO":"FOLHA\u0020DE\u0020PAGAMENTO","TOTAL":"500"},{"CONTA_PLANO":"MATERIAL\u0020DE\u0020EXPEDIENTE","TOTAL":"450"},{"CONTA_PLANO":"MANUTEN\u00C7\u00C3O\u0020DE\u0020VEICULO\u0020","TOTAL":"300"},{"CONTA_PLANO":"MANUTEN\u00C7\u00C3O\u0020PREDIAL","TOTAL":"200"},{"CONTA_PLANO":"CONSORCIO\u0020MOTO\u0020DE\u0020ENTREGA\u0020RAPI","TOTAL":"200"},{"CONTA_PLANO":"PAGAMENTO\u0020IPTU","TOTAL":"150"},{"CONTA_PLANO":"ADIANTAMENTO\u0020DE\u0020SAL\u00C1RIO","TOTAL":"100"},{"CONTA_PLANO":"RECEBIMENTOS\u0020DE\u0020EMPRESTIMO","TOTAL":"100"},{"CONTA_PLANO":"PAGAMENTO\u0020DAE-ICMS","TOTAL":"30"}]
+  ,
+  "valueField": "TOTAL",
+  "titleField": "CONTA_PLANO",
+  "startEffect": "elastic",
+  "startDuration": 2,
+  "labelRadius": 15,
+  "innerRadius": "50%",
+  "depth3D": 10,
+  "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+  "angle": 15,
+  "export": {
+    "enabled": true
+  }
+} );
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>
+
+
+
+
+
+
+
+
+</html>
